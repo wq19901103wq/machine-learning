@@ -2,7 +2,7 @@
 #include<vector>
 #include"../data.h"
 using namespace std;
-double euclid_distance(const ClusterData& p1,const ClusterData& p2)
+const double euclid_distance(const ClusterData& p1,const ClusterData& p2)
 {
      return norm(p1.input-p2.input);
 }
@@ -41,7 +41,6 @@ public:
      class InitialPointFacotry
      {
       public:
-
            InitialMethod* create_initial_point_factory(enum INITIALMETHOD initialtype)    
            {    
                if(initialtype == KMEANSPLUSPLUS)    
@@ -56,7 +55,7 @@ public:
 
      };
 private:
-     int k;//class_number
+     class_index k;//class_number
      vector<ClusterData>& data;
      vector<ClusterData> cluster_center;
      InitialPointFacotry inital_point_factory;
@@ -103,7 +102,7 @@ private:
                data[i].data_class=cl;
           }
      }
-     class_index nearest_center(const ClusterData& p1,const vector<ClusterData>& points)
+     class_index nearest_center(const ClusterData& p1,const vector<ClusterData>& points) const
      {
           double min_distance=LargeNum;
           class_index nearest_center;

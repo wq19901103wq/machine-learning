@@ -12,7 +12,7 @@ inline bool min(double data1,double data2)
 {
      return data1>data2?data1:data2;
 }
-double operator*(const vector<double>& lfh, const vector<double>& rgh)
+const double operator*(const vector<double>& lfh, const vector<double>& rgh)
 {
      double sum;
      assert(lfh.size()==rgh.size());
@@ -23,7 +23,7 @@ double operator*(const vector<double>& lfh, const vector<double>& rgh)
      }
      return sum;
 }
-vector<double> operator-(const vector<double>& lfh, const vector<double>& rgh)
+const vector<double> operator-(const vector<double>& lfh, const vector<double>& rgh)
 {
      vector<double> result;
      assert(lfh.size()==rgh.size());
@@ -35,7 +35,7 @@ vector<double> operator-(const vector<double>& lfh, const vector<double>& rgh)
      }
      return result;
 }
-vector<double> operator+(const vector<double>& lfh, const vector<double>& rgh)
+const vector<double> operator+(const vector<double>& lfh, const vector<double>& rgh)
 {
      vector<double> result;
      assert(lfh.size()==rgh.size());
@@ -48,7 +48,7 @@ vector<double> operator+(const vector<double>& lfh, const vector<double>& rgh)
      return result;
 }
 
-vector<double> operator*(double lfh, const vector<double>& rgh)
+const vector<double> operator*(double lfh, const vector<double>& rgh)
 {
      vector<double> result;
      result.resize(rgh.size());

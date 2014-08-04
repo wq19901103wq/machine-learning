@@ -13,11 +13,11 @@ class LogisticRegression
      vector<double> weight;
      int dimension;
      double lamda;
-     double step_size;
+     double learning_rate;
      double stop_threshold;
      enum optimization_algorithm{SGD,LBFGS};
 public:
-     LogisticRegression(double lamda_para,double step_size_para,double stop_threshold_para):lamda(lamda_para),step_size(step_size_para),stop_threshold(stop_threshold_para)
+     LogisticRegression(double lamda_para,double learning_rate_para,double stop_threshold_para):lamda(lamda_para),learning_rate(learning_rate_para),stop_threshold(stop_threshold_para)
      {
      }
      ~LogisticRegression()
@@ -41,7 +41,7 @@ private:
           {
               int random_index=rand()%train_data.size();
               gradient=loss_function_gradient(train_data[random_index].input,train_data[random_index].output);
-              weight=weight-(lamda*gradient);
+              weight=weight-(learning_rate*gradient);
           }while(norm(gradient)>stop_threshold);
      }
      double loss_function(const vector<double>& input,bool output) const
