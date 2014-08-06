@@ -22,13 +22,12 @@ class Recommender
 public:
      SparseMatrix<score_type>& user_item_matrix;
      virtual ~Recommender();
-     virtual score_type predict(user_index u,item_index i)=0;
+     virtual score_type predict(user_index u,item_index i) const=0;
      virtual void train()=0;
      virtual double loss_function()=0;
-private:
-     inline double access(user_index u,item_index i) const
+     inline double access(user_index u,item_index i) const//TODO
      {
-          //return user_item_matrix[u][i];
+         // return user_item_matrix(u,i);
      }
      inline bool is_given(score_type s) const 
      {

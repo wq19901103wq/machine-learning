@@ -5,13 +5,14 @@ class BaselinePredictor:public Recommender
      vector<score_type> user_bias;
      vector<score_type> item_bias;
      double average_bias;
-     double lamda;//正则参数
+     double lamda2;//正则参数
+     double lamda3;//正则参数
 public:
      score_type predict(user_index u,item_index i)
      {
           return average_bias+user_bias[u]+item_bias[i];
      }
-     void train()
+     void train()//TODO
      {
      }
      double loss_function()
@@ -32,7 +33,7 @@ public:
 private:
      double regularization() const
      {
-           return lamda*(user_bias*user_bias+item_bias*item_bias);
+           return lamda2*(user_bias*user_bias)+lamda3*(item_bias*item_bias);
      }
 };
       
