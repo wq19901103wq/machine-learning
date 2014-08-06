@@ -66,6 +66,10 @@ public:
 
           InitialMethod* inital_point_func=inital_point_factory.create_initial_point_factory(initialtype);
           cluster_center=inital_point_func->InitialPointGenerate();
+          delete inital_point_func;
+     }
+     ~KMeans()
+     {
      }
      void train()
      {
