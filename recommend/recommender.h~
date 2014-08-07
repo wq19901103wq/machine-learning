@@ -18,6 +18,7 @@ typedef double score_type;
 const score_type not_given=-1.0;
 class Recommender
 {
+
 public:
      SparseMatrix<score_type>& user_item_matrix;
      virtual ~Recommender();

@@ -110,6 +110,17 @@ public:
      {
      }
 };
+class MultiClassificationData:public Data
+{
+public:
+     class_index data_class;
+     virtual void read(string filename)
+     {
+     }
+     virtual void write(string filename)
+     {
+     }
+};
 class ReagressionData:public Data
 {
 public:
