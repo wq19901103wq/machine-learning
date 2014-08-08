@@ -7,6 +7,9 @@
 #include<assert.h>
 using namespace std;
 typedef size_t class_index;
+typedef int FeatureIndex;
+typedef int TrainSampleIndex;
+typedef double TreeValuetype;
 const double LargeNum=10000000000000;
 inline bool min(double data1,double data2)
 {
@@ -98,9 +101,52 @@ double sum(const vector<double>& vec)
             sum+=(*iter);
      return sum;
 }
-double average(const vector<double>& vec)
+double mean(const vector<double>& vec)
 {
      return sum(vec)/double(vec.size());
+}
+double variance(const vector<double>& vec)
+{
+     return norm(vec)/vec.size()-mean(vec)*mean(vec);
+}
+double square_error(double sum_left, double square_sum_left, int count_left,double sum_right,double square_sum_right, double count_right) 
+{
+     double error=0;
+     if(count_left!=0)
+     {
+            double mean_left = sum_left / count_left;
+            error+=(square_sum_left - mean_left * mean_left * count_left );
+     }
+     if(count_right!=0)
+     {
+            double mean_right = sum_right / count_right;
+            error+=(square_sum_right- mean_right * mean_right * count_right);
+     }
+     return error;
+}
+std::pair<TreeValuetype, double> best_spilit_by_square_error(const vector<std::pair<TreeValuetype,double> >& feature_value_map,double square_sum,double sum) 
+{
+     double sum_left=0, square_sum_left=0, sum_right=square_sum, square_sum_right=sum;
+     int count_left=0,count_right=feature_value_map.size();
+     double min_error=LargeNum,error;
+     TreeValuetype spilit_value;
+     while(count_right>0)
+     {
+            error=square_error(sum_left,square_sum_left, count_left,sum_right, square_sum_right, count_right) ;
+            if(error<min_error)
+            {
+                 min_error=error;
+                 spilit_value=feature_value_map[count_left].first;
+            }
+            count_left++;
+            sum_left+=feature_value_map[count_left].second;
+            square_sum_left+=feature_value_map[count_left].second*feature_value_map[count_left].second;
+            count_right--;
+            sum_right-=feature_value_map[count_left].second;
+            square_sum_right-=feature_value_map[count_left].second*feature_value_map[count_left].second;
+     }
+     return make_pair(spilit_value,error);
+
 }
 
 

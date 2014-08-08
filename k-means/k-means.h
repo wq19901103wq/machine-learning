@@ -4,10 +4,6 @@
 #include<vector>
 #include"../data.h"
 using namespace std;
-const double euclid_distance(const ClusterData& p1,const ClusterData& p2)
-{
-     return norm(p1.input-p2.input);
-}
 
 class KMeans:public Cluster
 {
