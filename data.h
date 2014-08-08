@@ -76,11 +76,34 @@ void operator-=(vector<double>& lfh, const vector<double>& rgh)
 {
      lfh=lfh-rgh;
 }
-
-double norm(const vector<double>& vec)
+double norm2(const vector<double>& vec)
 {
      return sqrt(vec*vec);
 }
+double norm1(const vector<double>& vec)
+{
+     double sum=0;
+     for(vector<double>::const_iterator iter=vec.begin();iter!=vec.end();iter++)
+            sum+=abs(*iter);
+     return sum;
+}
+double norm(const vector<double>& vec)
+{
+     return norm2(vec);
+}
+double sum(const vector<double>& vec)
+{
+     double sum=0;
+     for(vector<double>::const_iterator iter=vec.begin();iter!=vec.end();iter++)
+            sum+=(*iter);
+     return sum;
+}
+double average(const vector<double>& vec)
+{
+     return sum(vec)/double(vec.size());
+}
+
+
 class Data
 {
 public:
@@ -132,4 +155,8 @@ public:
      {
      }
 };
+const double euclid_distance(const ClusterData& p1,const ClusterData& p2)
+{
+     return norm(p1.input-p2.input);
+}
 #endif

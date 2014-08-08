@@ -6,6 +6,7 @@
 using namespace std;
 class Classifier 
 {
+
 public:
      virtual void init(const map<string,string>& parameters)=0;
      virtual void save_model(string path) const=0;

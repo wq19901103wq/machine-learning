@@ -20,10 +20,10 @@ public:
      LogisticRegression(double lamda_para,double learning_rate_para,double stop_threshold_para):lamda(lamda_para),learning_rate(learning_rate_para),stop_threshold(stop_threshold_para)
      {
      }
-     void init(const map<string,string>& parameters)
+     ~LogisticRegression()
      {
      }
-     ~LogisticRegression()
+     void init(const map<string,string>& parameters)
      {
      }
      bool predict(const vector<double>& input) const
@@ -40,6 +40,14 @@ public:
           sgd(train_data);
      }
 private:
+     inline double sigmoid(double s) const
+     {
+          return 1/(1+exp(0-s));
+     }
+     inline double sigmoid_derivative(double s) const
+     {
+          return sigmoid(s)*(1-sigmoid(s));
+     }
      void sgd(const vector<ClassificationData>& train_data)
      {
           int size=train_data.size();
@@ -55,14 +63,6 @@ private:
      {
           double probability=predict(input);
           return log(output?probability:1-probability);
-     }
-     inline double sigmoid(double s) const
-     {
-          return 1/(1+exp(0-s));
-     }
-     inline double sigmoid_derivative(double s) const
-     {
-          return sigmoid(s)*(1-sigmoid(s));
      }
      vector<double> loss_function_gradient(const vector<double>& input,bool output) const 
      {

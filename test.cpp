@@ -3,6 +3,7 @@
 #include"cluster.h"
 #include"logistic-regression/logistic-regression.h"
 #include"k-means/k-means.h"
+#include"decision-tree/regression-tree.h"
 int main()
 {
 }
