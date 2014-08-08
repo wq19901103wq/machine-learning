@@ -15,7 +15,7 @@ public:
            virtual vector<ClusterData> InitialPointGenerate()=0;
            virtual ~InitialMethod()=0;
      };
-     class KMeansPlusPlus:public InitialMethod
+     class KMeansPlusPlus:public InitialMethod   //TODO
      {
       public:
            vector<ClusterData> InitialPointGenerate()

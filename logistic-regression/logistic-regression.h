@@ -23,7 +23,7 @@ public:
      ~LogisticRegression()
      {
      }
-     void init(const map<string,string>& parameters)
+     void init(const map<string,string>& parameters) //TODO
      {
      }
      bool predict(const vector<double>& input) const

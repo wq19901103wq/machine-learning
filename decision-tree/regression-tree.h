@@ -137,8 +137,6 @@ private:
                     node->select_value = best_spilt_value_error_pair.first;
                }
           }
-
- 
      }
 
 
