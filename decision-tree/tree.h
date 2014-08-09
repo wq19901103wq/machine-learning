@@ -14,12 +14,21 @@ struct TreeNode
       TreeNode* right_node; 
       vector<TrainSampleIndex> train_sample; 
       int depth;
+      bool leaf;
 public:
-      TreeNode(int d):depth(d)
+      TreeNode(int d):depth(d),leaf(true)
       {
       }
       TreeNode(const vector<TrainSampleIndex>& t,int d): train_sample(t),depth(d)
       {
+      }
+      bool is_leaf()
+      {
+            return leaf;
+      }
+      void spilit()
+      {
+            leaf=false;
       }
       size_t train_sample_size()
       {

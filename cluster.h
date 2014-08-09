@@ -7,7 +7,7 @@ using namespace std;
 class Cluster
 {
 public:
-     virtual void init(const map<string,string>& parameters)=0;
+     virtual void init(map<string,string>& parameters)=0;
      virtual void train(vector<ClusterData>& dataset)=0;
      virtual ~Cluster();
 };

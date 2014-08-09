@@ -7,17 +7,23 @@
 #include"tree.h"
 #include <boost/lexical_cast.hpp>  
 using namespace std;
-
-class RegressionTree:public Classifier //TODO 考虑数据缺失的情况
+//TODO 考虑数据缺失的情况
+class RegressionTree:public Regressor 
 {
      int min_leaf_size;
      int max_depth;
      TreeNode* root;
 public:
+     RegressionTree()
+     {
+     }
+     ~RegressionTree()//TODO
+     {
+     }
      void init(map<string,string>& parameters)
      {
-          min_leaf_size = boost::lexical_cast<int>(parameters["MinLeafSize"]); 
-          max_depth = boost::lexical_cast<int>(parameters["MaxDepth"]); 
+          min_leaf_size = boost::lexical_cast<int>(parameters["min-leaf-size"]); 
+          max_depth = boost::lexical_cast<int>(parameters["max-depth"]); 
      }
      void save_model(string path) const //TODO 
      {
@@ -34,16 +40,14 @@ public:
           build_tree(dataset);
      }
 private:
-     TreeNode* predict_by_single_tree(ReagressionData& data) const
+     TreeNode* predict_by_single_tree(const ReagressionData& data) const
      {
           TreeNode* node=root;
-          TreeNode* last_node;
-          while(node!=NULL)
+          while(!node->is_leaf())
           {
-                last_node=node;
                 node=(data.input[node->get_select_feature()]<= node->get_value())?(node->left_node):(node->right_node);
           }
-          return last_node;
+          return node;
      }
      void build_tree(const vector<ReagressionData>& dataset)
      {
@@ -71,6 +75,7 @@ private:
           }
           std::pair<FeatureIndex,TreeValuetype> select_feature_and_spilt_value=find_best_spilit(dataset, node);
           node->set_spilit_feature(select_feature_and_spilt_value.first, select_feature_and_spilt_value.second);
+          node->spilit();
 	  node->left_node = new TreeNode(node->depth+1);
           node->right_node = new TreeNode(node->depth+1);
           int left_count=0,right_count=0;
@@ -111,6 +116,8 @@ private:
           double sum_total = 0;
           double square_sum_total = 0;
           int count_total = 0;
+          FeatureIndex select_feature;
+          TreeValuetype select_value;
           for (int i=0;i<node->train_sample_size();i++)
           {
                sum_total += dataset[node-> train_sample[i]].output;
@@ -133,10 +140,11 @@ private:
 	       if (min_error > best_spilt_value_error_pair.second)
                {
                     min_error=best_spilt_value_error_pair.second;
-                    node->select_feature= featureid;
-                    node->select_value = best_spilt_value_error_pair.first;
+                    select_feature= featureid;
+                    select_value = best_spilt_value_error_pair.first;
                }
           }
+          return make_pair(select_feature,select_value);
      }
 
 
