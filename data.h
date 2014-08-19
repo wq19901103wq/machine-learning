@@ -6,12 +6,17 @@
 #include<stdlib.h>
 #include<assert.h>
 using namespace std;
-typedef size_t class_index;
-typedef int FeatureIndex;
-typedef int TrainSampleIndex;
-typedef double TreeValuetype;
+typedef int ClassID;
+typedef int FeatureID;
+typedef int SampleID;
+typedef double FeatureValue;
 const double LargeNum=10000000000000;
-inline bool min(double data1,double data2)
+const double SmallNum=-10000000000000;
+inline double min(double data1,double data2)
+{
+     return data1<data2?data1:data2;
+}
+inline double max(double data1,double data2)
 {
      return data1>data2?data1:data2;
 }
@@ -124,12 +129,12 @@ double square_error(double sum_left, double square_sum_left, int count_left,doub
      }
      return error;
 }
-std::pair<TreeValuetype, double> best_spilit_by_square_error(const vector<std::pair<TreeValuetype,double> >& feature_value_map,double square_sum,double sum) 
+std::pair<FeatureValue, double> best_spilit_by_square_error(const vector<std::pair<FeatureValue,double> >& feature_value_map,double square_sum,double sum) 
 {
      double sum_left=0, square_sum_left=0, sum_right=square_sum, square_sum_right=sum;
      int count_left=0,count_right=feature_value_map.size();
      double min_error=LargeNum,error;
-     TreeValuetype spilit_value;
+     FeatureValue spilit_value;
      while(count_right>0)
      {
             error=square_error(sum_left,square_sum_left, count_left,sum_right, square_sum_right, count_right) ;
@@ -160,7 +165,7 @@ public:
 class ClusterData:public Data
 {
 public:
-     class_index data_class;
+     ClassID data_class;
      virtual void read(string filename)
      {
      }
@@ -182,7 +187,7 @@ public:
 class MultiClassificationData:public Data
 {
 public:
-     class_index data_class;
+     ClassID data_class;
      virtual void read(string filename)
      {
      }

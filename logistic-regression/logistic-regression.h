@@ -1,11 +1,14 @@
 #ifndef LOGISTIC_REGRESSION_H
 #define LOGISTIC_REGRESSION_H
 #include<iostream>
-#include<vector>
 #include<math.h>
 #include<stdlib.h>
 #include<assert.h>
+#include<vector>
+#include <boost/lexical_cast.hpp>  
+#include"../classifier.h"
 #include"../data.h"
+
 using namespace std;
 
 class LogisticRegression:public Classifier
@@ -17,14 +20,17 @@ class LogisticRegression:public Classifier
      double stop_threshold;
      enum optimization_algorithm{SGD,LBFGS};
 public:
-     LogisticRegression(double lamda_para,double learning_rate_para,double stop_threshold_para):lamda(lamda_para),learning_rate(learning_rate_para),stop_threshold(stop_threshold_para)
+     LogisticRegression()
      {
      }
      ~LogisticRegression()
      {
      }
-     void init(const map<string,string>& parameters) //TODO
+     void init(map<string,string>& parameters) //TODO
      {
+          lamda = boost::lexical_cast<double>(parameters["lamda"]); //regularization-coefficient
+          learning_rate = boost::lexical_cast<double>(parameters["learning-rate"]); 
+          stop_threshold = boost::lexical_cast<double>(parameters["stop-threshold "]); 
      }
      bool predict(const vector<double>& input) const
      {
@@ -51,13 +57,19 @@ private:
      void sgd(const vector<ClassificationData>& train_data)
      {
           int size=train_data.size();
+          assert(size>0);
+          init_weight(train_data);
           vector<double> gradient;
           do
           {
-              int random_index=rand()%train_data.size();
+              int random_index=rand()%size;
               gradient=loss_function_gradient(train_data[random_index].input,train_data[random_index].output);
               weight=weight-(learning_rate*gradient);
           }while(norm(gradient)>stop_threshold);
+     }
+     void init_weight(const vector<ClassificationData>& train_data)
+     {
+          weight.resize(train_data[0].input.size());
      }
      double loss_function(const vector<double>& input,bool output) const
      {
@@ -68,7 +80,7 @@ private:
      {
           double probability=predict(input);
           double coefficient=output?(1/probability):1/(probability-1);
-          return (coefficient*sigmoid_derivative(input*weight))*input+lamda*weight; //TODO
+          return (coefficient*sigmoid_derivative(input*weight))*input+lamda*weight;
      }
 };
 #endif

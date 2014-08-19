@@ -3,23 +3,23 @@
 #include <vector>
 using namespace std;
 
-typedef std::vector< std::vector<TreeValuetype> > TreeValueMatrix;
-typedef std::vector<TreeValuetype> TreeValueVector;
+typedef std::vector< std::vector<FeatureValue> > TreeValueMatrix;
+typedef std::vector<FeatureValue> TreeValueVector;
 struct TreeNode
 {
-      FeatureIndex select_feature; 
-      TreeValuetype select_value; 
+      FeatureID select_feature; 
+      FeatureValue select_value; 
       double prediction;
       TreeNode* left_node; 
       TreeNode* right_node; 
-      vector<TrainSampleIndex> train_sample; 
+      vector<SampleID> train_sample; 
       int depth;
       bool leaf;
 public:
       TreeNode(int d):depth(d),leaf(true)
       {
       }
-      TreeNode(const vector<TrainSampleIndex>& t,int d): train_sample(t),depth(d)
+      TreeNode(const vector<SampleID>& t,int d): train_sample(t),depth(d)
       {
       }
       bool is_leaf()
@@ -34,11 +34,11 @@ public:
       {
             return train_sample.size();
       }
-      TreeValuetype get_value()
+      FeatureValue get_value()
       {
             return select_value;
       }
-      FeatureIndex get_select_feature()
+      FeatureID get_select_feature()
       {
             return select_feature;
       }
@@ -50,7 +50,7 @@ public:
       {
             prediction=p;
       }
-      void set_spilit_feature(FeatureIndex s, TreeValuetype v)
+      void set_spilit_feature(FeatureID s, FeatureValue v)
       {
            select_feature=s; 
            select_value=v;

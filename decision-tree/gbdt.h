@@ -32,11 +32,11 @@ public:
      }
      void train(const vector<ReagressionData>& dataset)
      {
-           vector<ReagressionData> temp_dataset=dataset; //TODO  因为 dataset 应该是const,所以 残差的数据不能直接在上面做修正
+           vector<ReagressionData> temp_dataset=dataset; //TODO 因为dataset 应该是const,所以残差的数据不能直接在上面做修正,但复制一个浪费空间和时间
            for (int tree_id=0;tree_id < regression_trees.size();tree_id++)
            {
                 regression_trees[tree_id].train(temp_dataset);
-                for (int data_id=0;data_id < dataset.size();data_id++)
+                for (int data_id=0;data_id < temp_dataset.size();data_id++)
                 {
                       temp_dataset[data_id].output -= shrink * regression_trees[tree_id].predict(temp_dataset[data_id]);
                 }
@@ -48,7 +48,7 @@ private:
            double rmse = 0;
            for (int data_id=0;data_id < dataset.size();data_id++)
            {
-                rmse += (dataset[data_id].output) * (dataset[data_id].output);
+                rmse += (dataset[data_id].output) * (dataset[data_id].output);//output 其实是残差
            }
            return sqrt( rmse / dataset.size() );
      }

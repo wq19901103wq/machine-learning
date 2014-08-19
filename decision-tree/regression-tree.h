@@ -3,9 +3,10 @@
 #include<iostream>
 #include<vector>
 #include<queue>
+#include <boost/lexical_cast.hpp>  
 #include"../data.h"
 #include"tree.h"
-#include <boost/lexical_cast.hpp>  
+
 using namespace std;
 //TODO 考虑数据缺失的情况
 class RegressionTree:public Regressor 
@@ -52,7 +53,7 @@ private:
      void build_tree(const vector<ReagressionData>& dataset)
      {
           std::queue<TreeNode*> node_to_spilit;
-          vector<TrainSampleIndex> train_sample; 
+          vector<SampleID> train_sample; 
           root=new TreeNode(1);
           for (int k=0;k<dataset.size();k++)
           {
@@ -73,7 +74,7 @@ private:
           {
                 return;
           }
-          std::pair<FeatureIndex,TreeValuetype> select_feature_and_spilt_value=find_best_spilit(dataset, node);
+          std::pair<FeatureID,FeatureValue> select_feature_and_spilt_value=find_best_spilit(dataset, node);
           node->set_spilit_feature(select_feature_and_spilt_value.first, select_feature_and_spilt_value.second);
           node->spilit();
 	  node->left_node = new TreeNode(node->depth+1);
@@ -109,15 +110,15 @@ private:
                return  true;
           return false;
      }
-     std::pair<FeatureIndex,TreeValuetype> find_best_spilit(const vector<ReagressionData>& dataset,TreeNode* node)
+     std::pair<FeatureID,FeatureValue> find_best_spilit(const vector<ReagressionData>& dataset,TreeNode* node)
      {
-          FeatureIndex feature_size=dataset[0].input.size();
-	  vector<std::vector<std::pair<TreeValuetype,double> > > feature_value_map(feature_size);
+          FeatureID feature_size=dataset[0].input.size();
+	  vector<std::vector<std::pair<FeatureValue,double> > > feature_value_map(feature_size);
           double sum_total = 0;
           double square_sum_total = 0;
           int count_total = 0;
-          FeatureIndex select_feature;
-          TreeValuetype select_value;
+          FeatureID select_feature;
+          FeatureValue select_value;
           for (int i=0;i<node->train_sample_size();i++)
           {
                sum_total += dataset[node-> train_sample[i]].output;
@@ -134,9 +135,9 @@ private:
           double min_error=LargeNum;
           for (int featureid=0;featureid<feature_size;featureid++) 
           {
-               std::vector<std::pair<TreeValuetype,double> >& feaure_try_to_spilit=feature_value_map[featureid];
+               std::vector<std::pair<FeatureValue,double> >& feaure_try_to_spilit=feature_value_map[featureid];
                std::sort(feaure_try_to_spilit.begin(),feaure_try_to_spilit.end());
-               std::pair<FeatureIndex,TreeValuetype> best_spilt_value_error_pair=best_spilit_by_square_error(feaure_try_to_spilit, square_sum_total, sum_total) ;
+               std::pair<FeatureID,FeatureValue> best_spilt_value_error_pair=best_spilit_by_square_error(feaure_try_to_spilit, square_sum_total, sum_total) ;
 	       if (min_error > best_spilt_value_error_pair.second)
                {
                     min_error=best_spilt_value_error_pair.second;

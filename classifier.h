@@ -20,7 +20,7 @@ class MultiClassifier
      virtual void init(const map<string,string>& parameters)=0;
      virtual void save_model(string path) const=0;
      virtual void load_model(string path)=0;
-     virtual class_index predict(MultiClassificationData& data)=0;
+     virtual ClassID predict(MultiClassificationData& data)=0;
      virtual void train(const vector<MultiClassificationData>& dataset)=0;
      virtual ~MultiClassifier();
 };
