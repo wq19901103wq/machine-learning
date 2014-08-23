@@ -57,11 +57,11 @@ public:
                 double total=sum(distance);
                 double rand=random()*total;//TODO
                 int k=-1;
-                while(total>=0)
+                do
                 {
-                     total-=distance[k];
                      k++;
-                }
+                     rand-=distance[k];
+                }while(total>=0)
                 return k;
           }
      };
