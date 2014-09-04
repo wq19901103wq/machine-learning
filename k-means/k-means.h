@@ -86,7 +86,7 @@ public:
                     ret.push_back(random_generate(max_feature_value,min_feature_value,i));
                 }
            }
-       private:
+      private:
            ClusterData random_generate(const vector<double>& max_feature_value,const vector<double>& min_feature_value,ClassID clid)
            {
                 ClusterData center;
