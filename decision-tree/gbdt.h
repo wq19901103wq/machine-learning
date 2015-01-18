@@ -32,7 +32,7 @@ public:
      }
      void train(const vector<ReagressionData>& dataset)
      {
-           vector<ReagressionData> temp_dataset=dataset; //TODO 因为dataset 应该是const,所以残差的数据不能直接在上面做修正,但复制一个浪费空间和时间
+           vector<ReagressionData> temp_dataset=dataset; 
            for (int tree_id=0;tree_id < regression_trees.size();tree_id++)
            {
                 regression_trees[tree_id].train(temp_dataset);

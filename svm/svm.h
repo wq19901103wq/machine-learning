@@ -4,7 +4,7 @@
 #include"../classifier.h"
 #include"../data.h"
 
-class SVM:public Classifier
+class SVM : public Classifier
 {
       vector<double> weight;
       double bias;
@@ -19,8 +19,7 @@ public:
      }
      void init(map<string,string>& parameters) //TODO
      {
-          c.C,_ = strconv.ParseFloat(params["c"], 64)
-	  c.e,_ = strconv.ParseFloat(params["e"], 64)
+
      }
      bool predict(const vector<double>& input) const
      {
@@ -32,20 +31,7 @@ public:
 private:
      bool match_kkt(double y, double f, double a) 
      {
-	ep := c.C * 0.01
-	if a < ep && y * f > 1.0{
-		return true
-	}
+     }
+};
 
-	if a > c.C - ep && y * f < 1.0 {
-		return true
-	}
-
-	if a > ep && a < c.C - ep && y * f == 1.0 {
-		return true
-	}
-
-	return false
-    }
-}
 #endif

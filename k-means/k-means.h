@@ -61,7 +61,7 @@ public:
                 {
                      k++;
                      rand-=distance[k];
-                }while(total>=0)
+                }while(total>=0);
                 return k;
           }
      };

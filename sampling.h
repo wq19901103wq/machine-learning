@@ -1,10 +1,10 @@
 #ifndef SAMPLING_H
 #define SAMPLING_H
-#include<iostream>
-#include<vector>
-#include<math.h>
-#include<stdio.h>
-#include<stdlib.h>
+#include <iostream>
+#include <vector>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 double uniform()   //均匀分布

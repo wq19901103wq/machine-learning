@@ -1,14 +1,14 @@
 #ifndef LOGISTIC_REGRESSION_H
 #define LOGISTIC_REGRESSION_H
-#include<iostream>
-#include<math.h>
-#include<stdlib.h>
-#include<assert.h>
-#include<vector>
+#include <iostream>
+#include <math.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <vector>
 #include <boost/lexical_cast.hpp>  
 #include"../classifier.h"
 #include"../data.h"
-
+typedef int ClassID;
 using namespace std;
 
 class LogisticRegression:public Classifier

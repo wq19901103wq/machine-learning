@@ -1,17 +1,23 @@
 #ifndef DATA_H
 #define DATA_H
-#include<iostream>
-#include<vector>
-#include<math.h>
-#include<stdlib.h>
-#include<assert.h>
+
+#include <iostream>
+#include <vector>
+#include <math.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <set>
+
 using namespace std;
+
 typedef int ClassID;
 typedef int FeatureID;
 typedef int SampleID;
 typedef double FeatureValue;
+
 const double LargeNum=10000000000000;
 const double SmallNum=-10000000000000;
+
 inline double min(double data1,double data2)
 {
      return data1<data2?data1:data2;
@@ -114,6 +120,10 @@ double variance(const vector<double>& vec)
 {
      return norm(vec)/vec.size()-mean(vec)*mean(vec);
 }
+double sigmoid(double s)
+{
+     return 1/(1+exp(0-s));
+}
 double square_error(double sum_left, double square_sum_left, int count_left,double sum_right,double square_sum_right, double count_right) 
 {
      double error=0;
@@ -209,5 +219,22 @@ public:
 const double euclid_distance(const ClusterData& p1,const ClusterData& p2)
 {
      return norm(p1.input-p2.input);
+}
+
+int get_dim_of(std::vector<MultiClassificationData> data)
+{
+    if(data.empty())
+        return 0;
+    else
+        return data[0].input.size();
+}
+int get_class_num_of(std::vector<MultiClassificationData> data)
+{
+    std::set<ClassID> class_ids;
+    for(size_t i=0;i<data.size();i++)
+    {
+        class_ids.insert(data[i].data_class);
+    }
+    return class_ids.size();
 }
 #endif
